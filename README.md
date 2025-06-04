@@ -3,7 +3,7 @@
 Repo for preparing materials for the2025  NYU-LMU-Workshop - Making Data Work: Tools for Better Statistical Practice
 
 slides: https://sherryzhang-lmu2025.netlify.app
-Your time: `tryme.R`
+exercise: `tryme.R`
 
 
 The latest version of R (\>= 4.5.0) and RStudio (\>= 2025.05.0) should be installed, and these packages with their dependencies installed prior to joining the tutorial:
