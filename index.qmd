@@ -1,5 +1,5 @@
 ---
-title: "Dossier: Analyzing data analysis in R"
+title: "Dossier: Analyzing decisions in analysis as data"
 author: "H. Sherry Zhang " 
 institute: "University of Texas at Austin" 
 date: "2025 Jun 05"
@@ -15,10 +15,6 @@ format:
     footer: "https://sherryzhang-lmu2025.netlify.app"
 preamble: >
   \usepackage{amsfonts,amsmath,amssymb,amsthm}
-title-slide-attributes: 
-  data-background-image: figures/logo.png
-  data-background-size: 7%
-  data-background-position: 98% 98%
 editor_options: 
   chunk_output_type: console
 editor: 
@@ -43,20 +39,31 @@ opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 ```
 
 
+<!-- Imagine your research assistant/ student enters into a new domain and needs to analyze data. -->
 
-Imagine your research assistant/ student enters into a new domain and needs to analyze data.
+<!-- Most common way is to ask them to read a few papers in the domain, and they can grasp the methods and data analysis from the papers.  -->
 
-Most common way is to ask them to read a few papers in the domain, and they can grasp the methods and data analysis from the papers. 
+<!-- But we all know it's manual work ... what if we can encode the literature as a database and query it?  -->
 
-But we all know it's manual work ... what if we can encode the literature as a database and query it? 
+<!-- Then it takes a much less time to understand more papers in the domain, maybe we can trace them by time, compare methods used by the authors, and cluster papers by the methods they used. -->
 
-Then it takes a much less time to understand more papers in the domain, maybe we can trace them by time, compare methods used by the authors, and cluster papers by the methods they used.
+<!-- It's like treating data analysis decisions as data to analyze them.  -->
 
-It's like treating data analysis decisions as data to analyze them. 
+## {.smaller background-image="figures/lots-of-papers.jpg" background-size="100%" background-position="50% 50%"}
 
---- 
+---
 
-## {.smaller background-image="figures/overview.png" background-size="60%" background-position="50% 50%"}
+## [Is it possible that we can digitalize these decisions?]{.r-fit-text}
+
+If so, we can
+
+* look up particular decisions made in the past,
+* analyze the decisions across time, and compare those of the same/different authors, and
+* cluster papers by comparing their methodology similarity  
+
+. . . 
+
+It would be a handy tool to see the big picture of the domain methodology in a much more efficient manner than reading all the applied studies!
 
 ---
 
@@ -74,7 +81,28 @@ It's like treating data analysis decisions as data to analyze them.
 
 ---
 
+## [Read decisions automatically with LLM]{.r-fit-text}{.smaller}
+
+<center>![](figures/llm.png){width="100%"}</center>
+
+---
+
+## [Read decisions automatically with LLM]{.r-fit-text}{.smaller}
+
+<center>![](figures/llm2.png){width="100%"}</center>
+
+---
+
+## [Read decisions automatically with LLM]{.r-fit-text}
+
+::: {.scroll-container}
+![](figures/llm-prompt.png){width="100%"}
+:::
+---
+
 ## Decision table {.smaller}
+
+`dossier::extract_decisions()`, `dossier::as_decision_tbl()`
 
 | Paper |  Variable | Method | Parameter | Type | Reason | Decision| 
 |-------|------|-------|--------|-----------|--------|---------|
@@ -87,17 +115,10 @@ It's like treating data analysis decisions as data to analyze them.
 
 ---
 
-## Automatic reading decisions with LLM 
-
-::: {.scroll-container}
-![](figures/llm-prompt.png){width="100%"}
-:::
-
----
-
-## Text similarity to compare decisions
+## [Text similarity to calculate decision similarity]{.r-fit-text}
 
 ```{r}
+library(text)
 sentence1 <- "3 df"
 sentence2 <- "50% of the data"
 sentence3 <- "7 df"
@@ -109,21 +130,45 @@ textSimilarity(x = model$texts$texts[2,], y = model$texts$texts[3,])
 textSimilarity(x = model$texts$texts[1,], y = model$texts$texts[3,])
 ```
 
-
 ---
 
-## [Clustering and find paper similarities]{.r-fit-text}{.smaller} 
+## [Aggregate decision similarity to paper similarity]{.r-fit-text}{.smaller}
 
-`run_hclust`, `run_mds`, and `ggplot2`
+`dossier::compute_text_embed()`, `dossier::calc_decision_similarity()`
 
-```{r echo = FALSE}
-#| fig-height: 5.5
+`dossier::calc_paper_similarity()`
+
+```{r}
 paper_df <- read_rds("data/papers_df.rds")
 
 # calculate decision similarity and paper similarity
 embed_df <- paper_df |> compute_text_embed()
 distance_decision_df <- calc_decision_similarity(paper_df, embed = embed_df)
-distance_df <- distance_decision_df |> calc_paper_similarity()
+(distance_df <- distance_decision_df |> calc_paper_similarity())
+```
+
+---
+
+## [Reformat the similarity score into a distance matrix]{.r-fit-text}
+
+`dossier::to_dist_mtx()`
+
+```{r}
+to_dist_mtx(distance_df)
+```
+
+. . .
+
+Then you can apply any cluster algorithm you like to see the similarity of the papers: `dossier::run_hclust()` and `dossier::run_mds()`
+
+---
+
+## [Cluster and find paper similarities]{.r-fit-text}{.smaller} 
+
+`dossier::run_hclust()`, `dossier::run_mds()`, `ggplot2` and friends
+
+```{r echo = FALSE}
+#| fig-height: 5.5
 
 # cluster the paper by hierarchical clustering and multi-dimensional scaling
 hclust_res <- run_hclust(distance_df, "ave")
@@ -158,31 +203,15 @@ p3 <- mds_df |> ggplot(aes(x = V1, y = V2)) +
 
 ```
 
+---
+
+## On 50+ papers {background-image="figures/viz-full.png" background-size="90%" background-position="40% 40%"}
+
+
 --- 
 
-## {.smaller background-image="figures/your-time.png" background-size="65%" background-position="50% 50%"}
+## {.smaller background-image="figures/your-time.png" background-size="65%" background-position="50% 40%"}
 
 
 
 
-
-<!-- papers --(LLM)-> decision database --(analysis)-> insights -->
-
-<!-- what's a decision  -->
-<!--   - an example  -->
-
-<!-- the designed table: parameter, spatial, and temporal  -->
-
-<!-- read in the paper via LLM (show the prompt) -->
-
-<!-- output the decision database (show the table) -->
-
-<!-- clean  -->
-
-<!-- Calculate paper similarity based on decisions  -->
-
-<!-- text similarity on the reason and decisions  -->
-
-<!-- aggregate decisions similarities to paper similarities -->
-
-<!-- show visuals  -->

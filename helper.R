@@ -2,6 +2,7 @@ get_most_common_method <- function(df, cols = c("time_parameter_method",
                                                 "humidity_parameter_method",
                                                 "temperature_parameter_method")) {
   df %>%
+    pivot_decision_tbl_wider() |>
     rowwise() %>%
     mutate(method = {
       vals <- c_across(all_of(cols))

@@ -11,7 +11,7 @@
 
   <meta name="author" content="H. Sherry Zhang">
   <meta name="dcterms.date" content="2025-06-05">
-  <title>Dossier: Analyzing data analysis in R</title>
+  <title>Dossier: Analyzing analysis decisions as if they are data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -194,8 +194,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="figures/logo.png" data-background-position="98% 98%" data-background-size="7%" class="quarto-title-block center">
-  <h1 class="title">Dossier: Analyzing data analysis in R</h1>
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Dossier: Analyzing analysis decisions as if they are data</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -212,14 +212,26 @@ H. Sherry Zhang
 </section>
 <section class="slide level2">
 
-<p>Imagine your research assistant/ student enters into a new domain and needs to analyze data.</p>
-<p>Most common way is to ask them to read a few papers in the domain, and they can grasp the methods and data analysis from the papers.</p>
-<p>But we all know it’s manual work … what if we can encode the literature as a database and query it?</p>
-<p>Then it takes a much less time to understand more papers in the domain, maybe we can trace them by time, compare methods used by the authors, and cluster papers by the methods they used.</p>
-<p>It’s like treating data analysis decisions as data to analyze them.</p>
+<!-- Imagine your research assistant/ student enters into a new domain and needs to analyze data. -->
+<!-- Most common way is to ask them to read a few papers in the domain, and they can grasp the methods and data analysis from the papers.  -->
+<!-- But we all know it's manual work ... what if we can encode the literature as a database and query it?  -->
+<!-- Then it takes a much less time to understand more papers in the domain, maybe we can trace them by time, compare methods used by the authors, and cluster papers by the methods they used. -->
+<!-- It's like treating data analysis decisions as data to analyze them.  -->
 </section>
-<section id="section" class="slide level2 smaller" data-background-image="figures/overview.png" data-background-size="60%" data-background-position="50% 50%">
+<section id="section" class="slide level2 smaller" data-background-image="figures/lots-of-papers.jpg" data-background-size="100%" data-background-position="50% 50%">
 <h2></h2>
+</section>
+<section id="is-it-possible-that-we-can-digitalize-these-decisions" class="slide level2">
+<h2><span class="r-fit-text">Is it possible that we can digitalize these decisions?</span></h2>
+<p>If so, we can</p>
+<ul>
+<li>look up particular decisions made in the past,</li>
+<li>analyze the decisions across time, and compare those of the same/different authors, and</li>
+<li>cluster papers by comparing their methodology similarity</li>
+</ul>
+<div class="fragment">
+<p>It would be a handy tool to see the big picture of the domain methodology in a much more efficient manner than reading all the applied studies!</p>
+</div>
 </section>
 <section id="section-1" class="slide level2 smaller" data-background-image="figures/decision.png" data-background-size="80%" data-background-position="50% 50%">
 <h2></h2>
@@ -231,8 +243,27 @@ H. Sherry Zhang
 <section id="section-3" class="slide level2 smaller" data-background-image="figures/decision3.png" data-background-size="80%" data-background-position="50% 50%">
 <h2></h2>
 </section>
+<section id="read-decisions-automatically-with-llm" class="slide level2 smaller">
+<h2><span class="r-fit-text">Read decisions automatically with LLM</span></h2>
+<center>
+<img data-src="figures/llm.png" style="width:100.0%">
+</center>
+</section>
+<section id="read-decisions-automatically-with-llm-1" class="slide level2 smaller">
+<h2><span class="r-fit-text">Read decisions automatically with LLM</span></h2>
+<center>
+<img data-src="figures/llm2.png" style="width:100.0%">
+</center>
+</section>
+<section id="read-decisions-automatically-with-llm-2" class="slide level2">
+<h2><span class="r-fit-text">Read decisions automatically with LLM</span></h2>
+<div class="scroll-container">
+<p><img data-src="figures/llm-prompt.png" style="width:100.0%"></p>
+</div>
+</section>
 <section id="decision-table" class="slide level2 smaller">
 <h2>Decision table</h2>
+<p><code>dossier::extract_decisions()</code>, <code>dossier::as_decision_tbl()</code></p>
 <table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 12%">
@@ -303,22 +334,17 @@ H. Sherry Zhang
 </tbody>
 </table>
 </section>
-<section id="llm-prompt" class="slide level2">
-<h2>LLM prompt</h2>
-<div class="scroll-container">
-<p><img data-src="figures/llm-prompt.png" style="width:100.0%"></p>
-</div>
-</section>
-<section id="text-similarity-to-compare-decisions" class="slide level2">
-<h2>Text similarity to compare decisions</h2>
+<section id="text-similarity-to-calculate-decision-similarity" class="slide level2">
+<h2><span class="r-fit-text">Text similarity to calculate decision similarity</span></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>sentence1 <span class="ot">&lt;-</span> <span class="st">"3 df"</span></span>
-<span id="cb1-2"><a href=""></a>sentence2 <span class="ot">&lt;-</span> <span class="st">"50% of the data"</span></span>
-<span id="cb1-3"><a href=""></a>sentence3 <span class="ot">&lt;-</span> <span class="st">"7 df"</span></span>
-<span id="cb1-4"><a href=""></a>model <span class="ot">&lt;-</span> <span class="fu">textEmbed</span>(<span class="at">texts =</span> <span class="fu">c</span>(sentence1, sentence2, sentence3))</span>
-<span id="cb1-5"><a href=""></a></span>
-<span id="cb1-6"><a href=""></a><span class="co"># cosine similarity by default</span></span>
-<span id="cb1-7"><a href=""></a><span class="fu">textSimilarity</span>(<span class="at">x =</span> model<span class="sc">$</span>texts<span class="sc">$</span>texts[<span class="dv">1</span>,], <span class="at">y =</span> model<span class="sc">$</span>texts<span class="sc">$</span>texts[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(text)</span>
+<span id="cb1-2"><a href=""></a>sentence1 <span class="ot">&lt;-</span> <span class="st">"3 df"</span></span>
+<span id="cb1-3"><a href=""></a>sentence2 <span class="ot">&lt;-</span> <span class="st">"50% of the data"</span></span>
+<span id="cb1-4"><a href=""></a>sentence3 <span class="ot">&lt;-</span> <span class="st">"7 df"</span></span>
+<span id="cb1-5"><a href=""></a>model <span class="ot">&lt;-</span> <span class="fu">textEmbed</span>(<span class="at">texts =</span> <span class="fu">c</span>(sentence1, sentence2, sentence3))</span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a><span class="co"># cosine similarity by default</span></span>
+<span id="cb1-8"><a href=""></a><span class="fu">textSimilarity</span>(<span class="at">x =</span> model<span class="sc">$</span>texts<span class="sc">$</span>texts[<span class="dv">1</span>,], <span class="at">y =</span> model<span class="sc">$</span>texts<span class="sc">$</span>texts[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5253702</code></pre>
 </div>
@@ -332,24 +358,67 @@ H. Sherry Zhang
 </div>
 </div>
 </section>
-<section id="clustering-and-find-paper-similarities" class="slide level2 smaller">
-<h2><span class="r-fit-text">Clustering and find paper similarities</span></h2>
-<p><code>run_hclust</code>, <code>run_mds</code>, and <code>ggplot2</code></p>
+<section id="aggregate-decision-similarity-to-paper-similarity" class="slide level2 smaller">
+<h2><span class="r-fit-text">Aggregate decision similarity to paper similarity</span></h2>
+<p><code>dossier::compute_text_embed()</code>, <code>dossier::calc_decision_similarity()</code></p>
+<p><code>dossier::calc_paper_similarity()</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>paper_df <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/papers_df.rds"</span>)</span>
+<span id="cb7-2"><a href=""></a></span>
+<span id="cb7-3"><a href=""></a><span class="co"># calculate decision similarity and paper similarity</span></span>
+<span id="cb7-4"><a href=""></a>embed_df <span class="ot">&lt;-</span> paper_df <span class="sc">|&gt;</span> <span class="fu">compute_text_embed</span>()</span>
+<span id="cb7-5"><a href=""></a>distance_decision_df <span class="ot">&lt;-</span> <span class="fu">calc_decision_similarity</span>(paper_df, <span class="at">embed =</span> embed_df)</span>
+<span id="cb7-6"><a href=""></a>(distance_df <span class="ot">&lt;-</span> distance_decision_df <span class="sc">|&gt;</span> <span class="fu">calc_paper_similarity</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 4
+   paper1      paper2        dist similarity
+   &lt;fct&gt;       &lt;fct&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1 braga       katsouyanni 0.0578      0.942
+ 2 braga       ostro       0.818       0.182
+ 3 braga       peel        1           0    
+ 4 braga       schwartz    0.101       0.899
+ 5 braga       zanobetti   0.0546      0.945
+ 6 katsouyanni ostro       0.627       0.373
+ 7 katsouyanni peel        0.786       0.214
+ 8 katsouyanni schwartz    0.140       0.860
+ 9 katsouyanni zanobetti   0.0799      0.920
+10 ostro       peel        0.545       0.455
+11 ostro       schwartz    0.565       0.435
+12 ostro       zanobetti   0.686       0.314
+13 peel        schwartz    0.633       0.367
+14 peel        zanobetti   0.825       0.175
+15 schwartz    zanobetti   0.143       0.857</code></pre>
+</div>
+</div>
+</section>
+<section id="reformat-the-similarity-score-into-a-distance-matrix" class="slide level2">
+<h2><span class="r-fit-text">Reformat the similarity score into a distance matrix</span></h2>
+<p><code>dossier::to_dist_mtx()</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">to_dist_mtx</span>(distance_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 braga katsouyanni      ostro       peel   schwartz
+katsouyanni 0.05780111                                             
+ostro       0.81790385  0.62691960                                 
+peel        1.00000000  0.78588531 0.54474610                      
+schwartz    0.10146916  0.14029528 0.56474610 0.63310631           
+zanobetti   0.05464868  0.07994514 0.68598039 0.82538338 0.14305712</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Then you can apply any cluster algorithm you like to see the similarity of the papers: <code>dossier::run_hclust()</code> and <code>dossier::run_mds()</code></p>
+</div>
+</section>
+<section id="cluster-and-find-paper-similarities" class="slide level2 smaller">
+<h2><span class="r-fit-text">Cluster and find paper similarities</span></h2>
+<p><code>dossier::run_hclust()</code>, <code>dossier::run_mds()</code>, and <code>ggplot2</code></p>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="section-4" class="slide level2 smaller" data-background-image="figures/your-time.png" data-background-size="65%" data-background-position="50% 50%">
+<img data-src="index_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="on-50-papers" class="slide level2" data-background-image="figures/viz-full.png" data-background-size="90%" data-background-position="40% 40%">
+<h2>On 50+ papers</h2>
+</section>
+<section id="section-4" class="slide level2 smaller" data-background-image="figures/your-time.png" data-background-size="65%" data-background-position="50% 40%">
 <h2></h2>
-<!-- papers --(LLM)-> decision database --(analysis)-> insights -->
-<!-- what's a decision  -->
-<!--   - an example  -->
-<!-- the designed table: parameter, spatial, and temporal  -->
-<!-- read in the paper via LLM (show the prompt) -->
-<!-- output the decision database (show the table) -->
-<!-- clean  -->
-<!-- Calculate paper similarity based on decisions  -->
-<!-- text similarity on the reason and decisions  -->
-<!-- aggregate decisions similarities to paper similarities -->
-<!-- show visuals  -->
 
 </section>
     </div>
