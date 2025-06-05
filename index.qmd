@@ -45,10 +45,6 @@ opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 
 <!-- But we all know it's manual work ... what if we can encode the literature as a database and query it?  -->
 
-<!-- Then it takes a much less time to understand more papers in the domain, maybe we can trace them by time, compare methods used by the authors, and cluster papers by the methods they used. -->
-
-<!-- It's like treating data analysis decisions as data to analyze them.  -->
-
 ## {.smaller background-image="figures/lots-of-papers.jpg" background-size="100%" background-position="50% 50%"}
 
 ---
