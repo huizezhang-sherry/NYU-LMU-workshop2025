@@ -34,7 +34,7 @@ library(ggrepel)
 library(patchwork)
 source("helper.R")
 options(htmltools.dir.version = FALSE)
-opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE,
                error = FALSE, fig.align = "center")
 ```
 
@@ -49,7 +49,7 @@ opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
 
 ---
 
-## [Is it possible that we can digitalize these decisions?]{.r-fit-text}
+## [Is it possible that we can format these decisions as data?]{.r-fit-text}
 
 If so, we can
 
@@ -204,9 +204,15 @@ p3 <- mds_df |> ggplot(aes(x = V1, y = V2)) +
 ## On 50+ papers {background-image="figures/viz-full.png" background-size="90%" background-position="40% 40%"}
 
 
+---
+
+## 
+
+<center>![](figures/pkg.png){width="100%"}</center>
+
 --- 
 
-## {.smaller background-image="figures/your-time.png" background-size="65%" background-position="50% 40%"}
+## {.smaller background-image="figures/your-time.png" background-size="80%" background-position="50% 40%"}
 
 
 

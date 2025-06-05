@@ -72,7 +72,7 @@ count_paper_pair_decisions(paper_df)
 ################################ hard ##################################
 ########################################################################
 # use the `ellmer` package to extract the decisions from the paper (pdf)
-# For both Gemini and Claude, you will need to obtain an API key
+# For both Gemini and Claude, you will need to obtain an API key and
 # include them in your .Renviron file (`usethis::edit_r_environ()`):
 # ANTHROPIC_API_KEY="YOURKEY"
 # GOOGLE_API_KEY="YOURKEY"
@@ -98,7 +98,7 @@ purrr::walk(1:5, ~extract_decisions(
 
 map(list.files("res/", pattern = "braga-", full.names = TRUE), clean_md)
 
-# To have a more stable LLM output, consider including temperature and seed argument
+# To have a more stable LLM output, consider including the temperature and seed argument
 purrr::walk(1:5, ~extract_decisions(
   prompt_file = system.file("prompt.md", package = "dossier"),
   pdf = files[1], llm_model = "gemini", temperature = 0, seed = 123,
