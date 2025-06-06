@@ -1,0 +1,42 @@
+---
+title: "Dossier: Analyzing decisions in analysis as data"
+author: "H. Sherry Zhang " 
+institute: "University of Texas at Austin" 
+date: "2025 Jun 05"
+format: 
+  revealjs:
+    scrollable: true
+    slide-number: true
+    show-slide-number: all
+    aspectratio: 169
+    theme: serif
+    preview-links: auto
+    pdf-separate-fragments: true
+    footer: "https://sherryzhang-lmu2025.netlify.app"
+preamble: >
+  \usepackage{amsfonts,amsmath,amssymb,amsthm}
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+#  {.smaller}
+
+Studying data analysis gives a higher level understanding of what we can
+generalize from specific analysis from experience and how we can pass it
+down to students.
+
+<br>
+
+Pain points:
+
+1.  **Coming up with a good question is way more difficult than solving
+    the problem**
+
+2.  **Who would be my audience? Where to give talks and publish?**
+
+    It is a topic not discussed enough in the statistics community, but
+    there are some discussions in the IEEE community in viz, in Fairness
+    ML, in HCI.
